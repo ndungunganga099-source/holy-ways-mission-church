@@ -10,6 +10,67 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.querySelector(".prev-btn");
     const nextBtn = document.querySelector(".next-btn");
 
+    document.querySelectorAll("[data-email-form]").forEach((form) => {
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            if (!form.reportValidity()) return;
+            const subject = form.dataset.subject || "Message for Holyways Mission Church";
+            const body = [...new FormData(form).entries()]
+                .map(([label, value]) => `${label}: ${String(value).trim()}`)
+                .join("\n\n");
+            window.location.href = `mailto:petermuiru@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        });
+    });
+
+    const helpToggle = document.querySelector(".help-toggle");
+    const helpPanel = document.getElementById("help-panel");
+    if (helpToggle && helpPanel) {
+        helpToggle.addEventListener("click", () => {
+            const isOpen = helpToggle.getAttribute("aria-expanded") === "true";
+            helpToggle.setAttribute("aria-expanded", String(!isOpen));
+            helpPanel.hidden = isOpen;
+        });
+    }
+
+    const assistantForm = document.getElementById("assistant-form");
+    const assistantMessages = document.getElementById("assistant-messages");
+    if (assistantForm && assistantMessages) {
+        assistantForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const questionInput = assistantForm.elements.question;
+            const question = questionInput.value.trim();
+            if (!question) return;
+
+            const addMessage = (message, className) => {
+                const paragraph = document.createElement("p");
+                paragraph.className = className;
+                paragraph.textContent = message;
+                assistantMessages.append(paragraph);
+            };
+            const normalizedQuestion = question.toLowerCase();
+            let reply = "I’m not sure about that. Please use ‘Chat with a Pastor’ and our team will help you.";
+
+            if (/time|service|sunday|worship|when/.test(normalizedQuestion)) {
+                reply = "Sunday worship is at 8:00 AM and 10:30 AM. Mid-week Fellowship is Wednesdays at 5:00 PM.";
+            } else if (/park|parking|car/.test(normalizedQuestion)) {
+                reply = "Ample secure parking is available inside the main compound gate.";
+            } else if (/child|children|kid|school/.test(normalizedQuestion)) {
+                reply = "Dedicated, loving Sunday School classes run during the main service for children of all ages.";
+            } else if (/where|location|address|find|directions/.test(normalizedQuestion)) {
+                reply = "Holyways Mission Church is in Muchatha, Kiambu County, Kenya. The map is available in the Contact section.";
+            } else if (/pray|prayer/.test(normalizedQuestion)) {
+                reply = "We would be glad to pray with you. Use the prayer request form in the Contact section or chat with a pastor.";
+            } else if (/human|pastor|person|someone|contact|phone|email/.test(normalizedQuestion)) {
+                reply = "You can reach a pastor using the WhatsApp or email links below. Staff reply when available.";
+            }
+
+            addMessage(question, "visitor-message");
+            addMessage(reply, "assistant-message");
+            questionInput.value = "";
+            assistantMessages.scrollTop = assistantMessages.scrollHeight;
+        });
+    }
+
     document.querySelectorAll("img").forEach((img) => {
         img.addEventListener("error", () => {
             img.classList.add("is-missing");

@@ -492,6 +492,87 @@ header {
     text-transform: uppercase;
 }
 
+.leader-card .leader-bio {
+    padding: 0 24px 22px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.6;
+    text-transform: none;
+}
+
+.visit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.visit-card,
+.email-form {
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+}
+
+.visit-card > i {
+    color: var(--accent);
+    font-size: 1.4rem;
+    margin-bottom: 14px;
+}
+
+.visit-card h3,
+.email-form h3 {
+    margin-bottom: 10px;
+    color: var(--primary-dark);
+}
+
+.visit-card p,
+.email-form p {
+    margin-bottom: 14px;
+    color: var(--muted);
+}
+
+.visit-card a { color: var(--primary); font-weight: 700; }
+.contact-forms { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: 28px; }
+.email-form { display: grid; gap: 10px; align-content: start; }
+.email-form h3, .email-form > p { margin: 0; }
+.email-form label { margin-top: 4px; font-weight: 600; font-size: 0.9rem; }
+.email-form input, .email-form textarea {
+    width: 100%; padding: 11px 12px; border: 1px solid #cbd5e1; border-radius: 6px;
+    color: var(--ink); font: inherit; background: #fff;
+}
+.email-form input:focus, .email-form textarea:focus { outline: 2px solid rgba(24, 79, 69, 0.25); border-color: var(--primary); }
+.email-form button { justify-self: start; cursor: pointer; font: inherit; }
+
+.help-widget {
+    position: fixed;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    max-width: calc(100vw - 32px);
+}
+.help-toggle { border: 0; border-radius: 999px; padding: 14px 20px; color: #fff; background: var(--primary); box-shadow: var(--shadow-md); font: inherit; font-weight: 700; cursor: pointer; }
+.help-toggle:focus-visible, .help-panel a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.help-panel { width: min(350px, calc(100vw - 32px)); max-height: min(70vh, 560px); overflow-y: auto; padding: 22px; border: 1px solid var(--line); border-radius: 12px; background: #fff; box-shadow: var(--shadow-md); }
+.help-panel h2 { color: var(--primary-dark); font-size: 1.2rem; }
+.help-panel p { margin: 9px 0 14px; color: var(--muted); font-size: 0.9rem; }
+.help-panel > a:not(.btn-primary) { display: block; padding: 8px 0; color: var(--primary); font-weight: 600; }
+.help-panel .help-note { margin-bottom: 0; font-size: 0.78rem; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.assistant-messages { display: grid; gap: 8px; max-height: 220px; overflow-y: auto; margin: 14px 0; }
+.assistant-message, .visitor-message { max-width: 92%; padding: 10px 12px; border-radius: 10px; background: var(--soft); color: var(--ink); font-size: 0.86rem; }
+.visitor-message { justify-self: end; background: #e4f1ed; }
+.assistant-form { display: flex; gap: 6px; margin-bottom: 12px; }
+.assistant-form input { min-width: 0; flex: 1; padding: 10px; border: 1px solid var(--line); border-radius: 6px; font: inherit; }
+.assistant-form button { width: 42px; border: 0; border-radius: 6px; color: white; background: var(--primary); cursor: pointer; }
+.help-panel .pastor-handoff { width: 100%; margin-bottom: 6px; }
+
 .ministries {
     background: #fff;
 }
@@ -973,6 +1054,8 @@ footer {
     .video-grid,
     .events-grid,
     .contact-grid,
+    .visit-grid,
+    .contact-forms,
     .footer-container {
         grid-template-columns: 1fr;
     }
@@ -1016,6 +1099,9 @@ footer {
 }
 
 @media (max-width: 560px) {
+    .help-widget { right: max(12px, env(safe-area-inset-right)); bottom: max(12px, env(safe-area-inset-bottom)); }
+    .help-toggle { min-height: 48px; padding: 12px 16px; }
+    .help-panel { padding: 18px; max-height: 65vh; }
     .navbar {
         min-height: 72px;
     }
